@@ -1,4 +1,4 @@
-import basic
+import lexer
 
 while True:
 
@@ -7,7 +7,7 @@ while True:
     if command == "exit":
         break
 
-    result, error = basic.run('<stdin>', command)
+    result, error = lexer.run('<stdin>', command)
 
     if error:
         print(error.as_string())
