@@ -8,7 +8,7 @@ class Position:
         self.file_name = file_name
         self.file_text = file_text
 
-    def advance(self, current_char):
+    def advance(self, current_char=None):
         self.idx = self.idx + 1
         self.col = self.col + 1
 

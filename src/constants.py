@@ -7,6 +7,7 @@ TT_MUL    = 'MUL'
 TT_DIV    = 'DIV'
 TT_LPAREN = 'LPAREN'
 TT_RPAREN = 'RPAREN'
+TT_EOF    = 'EOF'
 
 
 # CONSTANTS
