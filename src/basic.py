@@ -1,5 +1,6 @@
 from lexer import Lexer
 from parser import Parser
+from interpreter import Interpreter
 
 #  RUN FUNCTION:
 
@@ -15,4 +16,10 @@ def run_command(file_name, text):
     parser_object = Parser(tokens)
     ast = parser_object.parse()
 
-    return ast.node, ast.error
+    if ast.error:
+        return None, ast.error
+    
+    interpreter_object = Interpreter()
+    result = interpreter_object.visit(ast.node)
+
+    return result.value , result.error
