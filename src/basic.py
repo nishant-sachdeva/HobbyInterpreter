@@ -18,7 +18,8 @@ def run_command(file_name, text):
 
     if ast.error:
         return None, ast.error
-    
+
+    # return ast.node, None
     interpreter_object = Interpreter()
     context = Context('<program>')
     

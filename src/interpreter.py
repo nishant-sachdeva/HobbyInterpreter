@@ -55,6 +55,10 @@ class Number:
             else:
                 return Number(self.value / other.value).set_context(self.context), None
 
+    def power_to(self,other):
+        if isinstance(other,Number):
+            return Number(self.value ** other.value).set_context(self.context), None
+        
     def __str__(self):
         return str(self.value)
 
@@ -100,6 +104,9 @@ class Interpreter:
             result, error = left.multed_by(right)
         elif node.op_tok.type == TT_DIV:
             result, error = left.divided_by(right)
+        elif node.op_tok.type == TT_POW:
+            result, error = left.power_to(right)
+
         
         if error:
             return res.failure(error)
@@ -108,18 +115,19 @@ class Interpreter:
 
     def visit_UnaryOpNode(self, node, context):
         res = RTResult()
-        number = res.result(self.visit(node.node, context))
+        number = res.register(self.visit(node.node, context))
 
         if res.error:
             return res
         
         error = None
 
-        if node.op_tok.value == TT_MINUS:
+        if node.op_tok.type == TT_MINUS:
             number,error = number.multed_by(Number(-1))
         
         if error:
             return res.failure(error)
+        
         return res.success(number.set_pos(node.pos_start, node.pos_end))
 
         
