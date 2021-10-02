@@ -10,7 +10,7 @@ class Error:
 
     def as_string(self):
         result = str(self.error_name) + ":" + str(self.details)
-        result += " " + str(self.pos_start.file_name) + " line : "+  str(self.pos_start.ln + 1)
+        result += " \n" + str(self.pos_start.file_name) + " line : "+  str(self.pos_start.ln + 1)
         result += '\n\n' + string_with_arrows(self.pos_start.file_text, self.pos_start, self.pos_end)
         return result
 

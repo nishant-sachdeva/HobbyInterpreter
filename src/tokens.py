@@ -12,8 +12,8 @@ class Token:
         if pos_end is not None:
             self.pos_end = pos_end
 
-        
-
+    def matches(self, type_, value):
+        return self.type == type_ and self.value == value        
     
     def __repr__(self):
         if self.value:
