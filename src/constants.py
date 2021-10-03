@@ -30,7 +30,9 @@ LETTERS_DIGITS = DIGITS + LETTERS + '_'
 #KEYWORDS
 KEYWORDS = [
     'FOR', 
-    'IF', 
+    'IF',
+    'THEN',
+    'ELIF',
     'ELSE', 
     'VAR',
     'AND',
