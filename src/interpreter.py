@@ -63,7 +63,42 @@ class Number:
     def power_to(self,other):
         if isinstance(other,Number):
             return Number(self.value ** other.value).set_context(self.context), None
-        
+
+    def get_comparison_eq(self, other):
+        if isinstance(other,Number):
+            return Number(int(self.value == other.value)).set_context(self.context), None
+
+    def get_comparison_ne(self, other):
+        if isinstance(other,Number):
+            return Number(int(self.value != other.value)).set_context(self.context), None
+
+    def get_comparison_lt(self, other):
+        if isinstance(other,Number):
+            return Number(int(self.value < other.value)).set_context(self.context), None
+    
+    def get_comparison_gt(self, other):
+        if isinstance(other,Number):
+            return Number(int(self.value > other.value)).set_context(self.context), None
+    
+    def get_comparison_lte(self, other):
+        if isinstance(other,Number):
+            return Number(int(self.value <= other.value)).set_context(self.context), None
+
+    def get_comparison_gte(self, other):
+        if isinstance(other,Number):
+            return Number(int(self.value >= other.value)).set_context(self.context), None
+    
+    def anded_by(self, other):
+        if isinstance(other,Number):
+            return Number(int(self.value and other.value)).set_context(self.context), None
+
+    def ored_by(self, other):
+        if isinstance(other,Number):
+            return Number(int(self.value or other.value)).set_context(self.context), None    
+
+    def notted(self):
+        return Number(1 if self.value == 0 else 0).set_context(self.context), None
+
     def __str__(self):
         return str(self.value)
 
@@ -132,6 +167,22 @@ class Interpreter:
             result, error = left.divided_by(right)
         elif node.op_tok.type == TT_POW:
             result, error = left.power_to(right)
+        elif node.op_tok.type == TT_EE:
+            result, error = left.get_comparison_eq(right)
+        elif node.op_tok.type == TT_NE:
+            result, error = left.get_comparison_ne(right)
+        elif node.op_tok.type == TT_LT:
+            result, error = left.get_comparison_lt(right)
+        elif node.op_tok.type == TT_GT:
+            result, error = left.get_comparison_gt(right)
+        elif node.op_tok.type == TT_LTE:
+            result, error = left.get_comparison_lte(right)
+        elif node.op_tok.type == TT_GTE:
+            result, error = left.get_comparison_gte(right)
+        elif node.op_tok.matches(TT_KEYWORD, 'AND'):
+            result, error = left.anded_by(right)
+        elif node.op_tok.matches(TT_KEYWORD, 'OR'):
+            result, error = left.ored_by(right)
 
         
         if error:
@@ -150,6 +201,9 @@ class Interpreter:
 
         if node.op_tok.type == TT_MINUS:
             number,error = number.multed_by(Number(-1))
+
+        if node.op_tok.matches(TT_KEYWORD, 'NOT'):
+            number, error = number.notted()
         
         if error:
             return res.failure(error)
