@@ -29,7 +29,10 @@ LETTERS_DIGITS = DIGITS + LETTERS + '_'
 
 #KEYWORDS
 KEYWORDS = [
-    'FOR', 
+    'FOR',
+    'TO',
+    'STEP',
+    'WHILE',
     'IF',
     'THEN',
     'ELIF',
